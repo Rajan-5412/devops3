@@ -1,0 +1,116 @@
+- Installing and Setting Up Gradle in IntelliJ IDEA
+
+- Creating a Gradle Project in IntelliJ IDEA
+    Step 1: Open IntelliJ IDEA and Create a New Project
+
+- Build and Run a Simple Java Application
+    Step 1: Modify build.gradle (Groovy DSL)
+
+    plugins {
+    id 'application'
+    }
+    repositories {
+    mavenCentral()
+
+    }
+    dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    }
+    application {
+    mainClass = 'org.example.Main'
+    }
+
+    Step 2: Create Main.java in src/main/java/com/example
+    package org.example;
+    public class Main {
+    public static void main(String[] args) {
+    System.out.println("Hello from Gradle!");
+    }
+    }
+
+    Step 3: Build and Run the Project
+        run from terminal:
+        gradle run
+
+- Hosting a Static Website on GitHub Pages
+    Step 1: Create a /docs Directory
+        Add your HTML, CSS, and images inside /docs .
+
+    Step 3: Commit and Push to GitHub
+    git add .
+    git commit -m "Deploy website using Gradle"
+    git push origin main
+
+    Step 4: Enable GitHub Pages
+    Go to GitHub Repo → Settings → Pages.
+
+- Testing the Website using Selenium & TestNG in IntelliJ IDEA
+    Step 1: Add Selenium & TestNG Dependencies in build.gradle
+      dependencies {
+      testImplementation 'org.seleniumhq.selenium:selenium-java:4.28.1' // use the latest stable
+      version
+      testImplementation 'org.testng:testng:7.4.0' // use the latest stable version
+      }
+      test {
+      useTestNG()
+      }
+
+    Step 2: Write a Test Script ( src/test/java/org/test/WebpageTest.java )
+
+    package org.test;
+    import org.openqa.selenium.WebDriver;
+    import org.openqa.selenium.chrome.ChromeDriver;
+    import org.testng.Assert;
+    import org.testng.annotations.AfterTest;
+    import org.testng.annotations.BeforeTest;
+    import org.testng.annotations.Test;
+    import static org.testng.Assert.assertTrue;
+    public class WebpageTest {
+    private static WebDriver driver;
+    @BeforeTest
+    public void openBrowser() throws InterruptedException {
+    driver = new ChromeDriver();
+    driver.manage().window().maximize();
+    Thread.sleep(2000);
+    driver.get("https://sauravsarkar-codersarcade.github.io/CA-GRADLE/");
+    }
+    @Test
+    public void titleValidationTest(){
+    String actualTitle = driver.getTitle();
+    String expectedTitle = "Tripillar Solutions";
+    Assert.assertEquals(actualTitle, expectedTitle);
+
+    assertTrue(true, "Title should contain 'Tripillar'");
+    }
+    @AfterTest
+    public void closeBrowser() throws InterruptedException {
+    Thread.sleep(1000);
+    driver.quit();
+    }
+    }
+
+    Step 3: Run the Tests
+        run from terminal:
+        Gradle test
+
+- Packaging a Gradle Project as a JAR
+    Step 1: Modify build.gradle for JAR Packaging
+
+    plugins {
+    id 'java'
+    id 'application'
+    }
+    application {
+    mainClass = 'com.example.Main'
+    }
+    jar {
+    manifest {
+    attributes 'Main-Class': 'com.example.Main'
+    }
+    }
+
+    Step 2: Build and Package the JAR
+        gradle jar
+
+    Step 3: Run the JAR
+        java -jar .\build\libs\<my-gradle-project>.jar
