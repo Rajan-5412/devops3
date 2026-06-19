@@ -1,4 +1,5 @@
 plugins {
+    id 'java'
     id 'application'
 }
 repositories {
@@ -16,4 +17,10 @@ application {
 
 test {
     useTestNG()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.example.Main'
+    }
 }
